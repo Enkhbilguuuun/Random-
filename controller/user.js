@@ -1,9 +1,9 @@
 import User from "../model/User.js";
+import jwt from "jsonwebtoken"
 
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({});
-
     res.send({
       data: users,
     });
@@ -17,10 +17,14 @@ export const getAllUsers = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
+    const token = jwt.sign({ name: req.body.email, age: req.body.password }, "secretkey", {
+      expiresIn: "100000",
+    });
 
     res.status(200).send({
       status: "complete",
-      data: req.body,
+      data: user,
+      token: token,
     });
   } catch (error) {
     res.status(400).send({

@@ -34,7 +34,7 @@ const router = express.Router();
 //   });
 // };
 
-router.route("/").get(myFirstMiddleware).post(verifyJWT).get(getAllUsers).post(createUser);
+router.route("/").get(getAllUsers).post(createUser);
 router.route("/signin").post(userLogIn);
 router.route("/:id").get(userById).put(updateUser).delete(removeUser);
 
